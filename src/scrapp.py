@@ -14,14 +14,21 @@ def scrap():
     html  =   requests.get(URL,    headers=headers)
     soup    =   BeautifulSoup(html.text, "html.parser")
 
+    try:
+        title=  soup.find("h1", class_  =   "ui-pdp-title").get_text().strip()
 
-    title=  soup.find("h1", class_  =   "ui-pdp-title").get_text().strip()
+        moneySymbol =   soup.find("span",   class_  =   "andes-money-amount__currency-symbol").get_text()
+        price   =  soup.find("span", class_    =   "andes-money-amount__fraction").get_text().strip()
+        dec =   soup.find("span",   class_  =   "andes-money-amount__cents andes-money-amount__cents--superscript-36").get_text().strip()
 
-    moneySymbol =   soup.find("span",   class_  =   "andes-money-amount__currency-symbol").get_text()
-    price   =  soup.find("span", class_    =   "andes-money-amount__fraction").get_text().strip()
-    dec =   soup.find("span",   class_  =   "andes-money-amount__cents andes-money-amount__cents--superscript-36").get_text().strip()
-    
-    print(title)
-    print(moneySymbol, price + "," + dec)
+        print(title)
+        print(moneySymbol, price + "," + dec)
+        
+    except  AttributeError  as  error:
+        moneySymbol =   soup.find("span",   class_  =   "andes-money-amount__currency-symbol").get_text()
+        price   =  soup.find("span", class_    =   "andes-money-amount__fraction").get_text().strip()
+        print(title)
+        print(moneySymbol, price)
+
     
 scrap()
