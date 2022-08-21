@@ -24,7 +24,7 @@ def scrap():
         print(title)
         print(moneySymbol, price + "," + dec)
         
-    except  AttributeError  as  error:
+    except  AttributeError:
         moneySymbol =   soup.find("span",   class_  =   "andes-money-amount__currency-symbol").get_text()
         price   =  soup.find("span", class_    =   "andes-money-amount__fraction").get_text().strip()
         print(title)
