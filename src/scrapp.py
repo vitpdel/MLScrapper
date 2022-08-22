@@ -1,8 +1,7 @@
-from itertools import product
 from    bs4 import  BeautifulSoup
 import  requests
 
-URL =   input("Please, enter the product url: ")
+URL =   input("Please, enter the product url: \n >> ")
     
 #This makes scraping work with any browser
 headers =   {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36'}
@@ -32,6 +31,8 @@ def scrap():
     
     discounts()
 
+    loopingChoice()
+
 
 def discounts():
     #Search discounts
@@ -42,5 +43,18 @@ def discounts():
     except  AttributeError: 
         discounts   =   "No discounts"
         return  print("\n Discounts: \n",   discounts )
+
+def looping():
+    choice  =   input("\n How often do you want to receive product information updates (1, 2, 3...)? \n >> ")
+    numChoice   =   int(choice[0:2])
+    
+
+def loopingChoice():
+    loopingchoice  =   input("\n Do you wish to receive this information in a loop? [Y/N] \n >> ")
+
+    if  loopingChoice  ==  "Y" or  "Yes"   or  "y" or  "yes":
+        looping()
+    elif    loopingChoice   ==  "N" or  "No"    or  "n" or  "no":
+        return  0
     
 scrap()
