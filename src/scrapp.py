@@ -1,18 +1,15 @@
 from itertools import product
-import  os, sys
 from    bs4 import  BeautifulSoup
 import  requests
 
+URL =   input("Please, enter the product url: ")
+    
+#This makes scraping work with any browser
+headers =   {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36'}
+html  =   requests.get(URL,    headers=headers)
+soup    =   BeautifulSoup(html.text, "html.parser")
 
 def scrap():
-    URL =   input("Please, enter the product url: ")
-    
-    #This makes scraping work with any browser
-    headers =   {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36'}
-
-    html  =   requests.get(URL,    headers=headers)
-    soup    =   BeautifulSoup(html.text, "html.parser")
-
     try:
         #Search prices and product names through HTML
         title   =   soup.find("h1", class_  =   "ui-pdp-title").get_text().strip()
@@ -23,20 +20,27 @@ def scrap():
         
         priceF  =   moneySymbol + " " + price + "," + dec
         
-        print("\n Product:")
-        print(title)
-        print("\n Price:")
-
-        print(priceF)
+        print("\n Product: \n",    title)
+        print("\n Price:    \n",  priceF)
 
     except  AttributeError:
         #If the product price has no decimal places
         priceFNoDec =   moneySymbol +   " " + price
 
-        print("\n Product:")
-        print(title)
-        print("\n Price:")
-        print(priceFNoDec)
+        print("\n Product: \n", title)
+        print("\n Price: \n", priceFNoDec )
+    
+    discounts()
 
+
+def discounts():
+    #Search discounts
+    try:
+        discounts   =   soup.find("span",   class_  =   "andes-money-amount__discount").get_text().strip()
+        
+        print("\n Discounts: \n", discounts)
+    except  AttributeError: 
+        discounts   =   "No discounts"
+        return  print("\n Discounts: \n",   discounts )
     
 scrap()
