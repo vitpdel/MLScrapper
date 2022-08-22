@@ -20,18 +20,23 @@ def scrap():
         moneySymbol =   soup.find("span",   class_  =   "andes-money-amount__currency-symbol").get_text()
         price   =  soup.find("span", class_    =   "andes-money-amount__fraction").get_text().strip()
         dec =   soup.find("span",   class_  =   "andes-money-amount__cents andes-money-amount__cents--superscript-36").get_text().strip()
-    
+        
+        priceF  =   moneySymbol + " " + price + "," + dec
+        
         print("\n Product:")
         print(title)
         print("\n Price:")
-        print(moneySymbol, price + "," + dec)
-        
+
+        print(priceF)
+
     except  AttributeError:
         #If the product price has no decimal places
+        priceFNoDec =   moneySymbol +   " " + price
+
         print("\n Product:")
         print(title)
         print("\n Price:")
-        print(moneySymbol, price)
+        print(priceFNoDec)
 
     
 scrap()
