@@ -1,5 +1,6 @@
 from    bs4 import  BeautifulSoup
 import  requests
+from    time    import  sleep
 
 URL =   input("Please, enter the product url: \n >> ")
     
@@ -7,6 +8,7 @@ URL =   input("Please, enter the product url: \n >> ")
 headers =   {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36'}
 html  =   requests.get(URL,    headers=headers)
 soup    =   BeautifulSoup(html.text, "html.parser")
+
 
 def scrap():
     try:
@@ -31,11 +33,9 @@ def scrap():
     
     discounts()
 
-    loopingChoice()
-
 
 def discounts():
-    #Search discounts
+    #Search discounts through HTML
     try:
         discounts   =   soup.find("span",   class_  =   "andes-money-amount__discount").get_text().strip()
         
@@ -44,10 +44,17 @@ def discounts():
         discounts   =   "No discounts"
         return  print("\n Discounts: \n",   discounts )
 
+
 def looping():
     choice  =   input("\n How often do you want to receive product information updates (1, 2, 3...)? \n >> ")
     numChoice   =   int(choice[0:2])
-    
+
+    timeLoop    =   numChoice   *   60  *   60  
+    while   True:
+        sleep(timeLoop)
+        print("\n \n \n PRODUCT INFORMATION UPDATES: \n")
+        scrap()
+
 
 def loopingChoice():
     loopingchoice  =   input("\n Do you wish to receive this information in a loop? [Y/N] \n >> ")
@@ -58,3 +65,4 @@ def loopingChoice():
         return  0
     
 scrap()
+loopingChoice()
