@@ -19,6 +19,7 @@ def scrap():
         price   =  soup.find("span", class_    =   "andes-money-amount__fraction").get_text().strip()
         dec =   soup.find("span",   class_  =   "andes-money-amount__cents andes-money-amount__cents--superscript-36").get_text().strip()
         
+        global  priceF
         priceF  =   moneySymbol + " " + price + "," + dec
         
         print("\n Product: \n",    title)
@@ -38,9 +39,24 @@ def discounts():
     #Search discounts through HTML
     try:
         discounts   =   soup.find("span",   class_  =   "andes-money-amount__discount").get_text().strip()
-        
-        print("\n Discounts: \n", discounts)
-    except  AttributeError: 
+        #discountsNum    =   int(discounts[0:2])
+#
+        #priceFNum   =   priceF[3:10]
+        #priceFNum   =   priceFNum.replace(",","")
+        #priceFNum   =   priceFNum.replace(".","")
+#
+        #discountsPriceF =   int(discountsNum)  /   100
+        #discountsPriceF1    =   int(discountsNum)   *   int(priceFNum) -    
+
+        ##discountsMoneySymbol    =   soup.find("span",   class_  =   "andes-money-amount__currency-symbol")
+        ##discountsPrice  =   soup.find("span",   class_  =   "andes-money-amount__fraction")
+        ##discountsDec    =   soup.find("sppan",  class_  =   "andes-money-amount__cents andes-money-amount__cents--superscript-36").get_text()  
+        ##discountsPriceF =   str(discountsMoneySymbol)    +   " " +   str(discountsPrice)  +   "," + str(discountsDec)
+
+
+        print("\n Discounts: \n", str(discounts)    +    ":",   int(discountsPriceF))
+    except  AttributeError  as  error: 
+        print(error)
         discounts   =   "No discounts"
         return  print("\n Discounts: \n",   discounts )
 
