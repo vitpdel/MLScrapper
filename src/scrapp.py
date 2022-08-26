@@ -47,25 +47,12 @@ def discounts():
         discountsNum    =   int(discounts[0:2])
 
         priceFNum   =   priceF[3:10]
-        print(priceFNum)
         priceFNum1  =   priceFNum.replace(".","")
-        print(priceFNum1)
         priceFNum2  =   priceFNum1.replace(",",".")
-        print(priceFNum2)
 
         priceFNumFloat  =   float(priceFNum2)
 
         discountsPriceF  =   priceFNumFloat  -   (priceFNumFloat*(discountsNum/100))
-
-        #discountsNumDec   =   discountsNum    /   100
-        #print(discountsNumDec)
-        #discountsPriceF    =   float(priceFNum2)  *   int(discountsNumDec)
-        #print(discountsPriceF)
-
-        ##discountsMoneySymbol    =   soup.find("span",   class_  =   "andes-money-amount__currency-symbol")
-        ##discountsPrice  =   soup.find("span",   class_  =   "andes-money-amount__fraction")
-        ##discountsDec    =   soup.find("sppan",  class_  =   "andes-money-amount__cents andes-money-amount__cents--superscript-36").get_text()  
-        ##discountsPriceF =   str(discountsMoneySymbol)    +   " " +   str(discountsPrice)  +   "," + str(discountsDec)
 
 
         print("\n Discounts: \n", str(discounts)    +    ":",   float(discountsPriceF))
