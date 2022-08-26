@@ -1,3 +1,4 @@
+from xml.etree.ElementTree import QName
 from    bs4 import  BeautifulSoup
 import  requests
 from    time    import  sleep
@@ -17,8 +18,12 @@ def scrap():
 
         moneySymbol =   soup.find("span",   class_  =   "andes-money-amount__currency-symbol").get_text()
         price   =  soup.find("span", class_    =   "andes-money-amount__fraction").get_text().strip()
-        dec =   soup.find("span",   class_  =   "andes-money-amount__cents andes-money-amount__cents--superscript-36").get_text().strip()
-        
+
+        try:
+            dec =   soup.find("span",   class_  ="andes-money-amount__cents andes-money-amount__cents--superscript-16").get_text().strip()
+        except TypeError:
+            dec =   soup.find("span",   class_  =   "andes-money-amount__cents andes-money-amount__cents--superscript-36")
+
         global  priceF
         priceF  =   moneySymbol + " " + price + "," + dec
         
@@ -39,14 +44,23 @@ def discounts():
     #Search discounts through HTML
     try:
         discounts   =   soup.find("span",   class_  =   "andes-money-amount__discount").get_text().strip()
-        #discountsNum    =   int(discounts[0:2])
-#
-        #priceFNum   =   priceF[3:10]
-        #priceFNum   =   priceFNum.replace(",","")
-        #priceFNum   =   priceFNum.replace(".","")
-#
-        #discountsPriceF =   int(discountsNum)  /   100
-        #discountsPriceF1    =   int(discountsNum)   *   int(priceFNum) -    
+        discountsNum    =   int(discounts[0:2])
+
+        priceFNum   =   priceF[3:10]
+        print(priceFNum)
+        priceFNum1  =   priceFNum.replace(".","")
+        print(priceFNum1)
+        priceFNum2  =   priceFNum1.replace(",",".")
+        print(priceFNum2)
+
+        priceFNumFloat  =   float(priceFNum2)
+
+        discountsPriceF  =   priceFNumFloat  -   (priceFNumFloat*(discountsNum/100))
+
+        #discountsNumDec   =   discountsNum    /   100
+        #print(discountsNumDec)
+        #discountsPriceF    =   float(priceFNum2)  *   int(discountsNumDec)
+        #print(discountsPriceF)
 
         ##discountsMoneySymbol    =   soup.find("span",   class_  =   "andes-money-amount__currency-symbol")
         ##discountsPrice  =   soup.find("span",   class_  =   "andes-money-amount__fraction")
@@ -54,7 +68,7 @@ def discounts():
         ##discountsPriceF =   str(discountsMoneySymbol)    +   " " +   str(discountsPrice)  +   "," + str(discountsDec)
 
 
-        print("\n Discounts: \n", str(discounts)    +    ":",   int(discountsPriceF))
+        print("\n Discounts: \n", str(discounts)    +    ":",   float(discountsPriceF))
     except  AttributeError  as  error: 
         print(error)
         discounts   =   "No discounts"
