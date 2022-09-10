@@ -1,10 +1,11 @@
-from xml.etree.ElementTree import QName
 from    bs4 import  BeautifulSoup
 import  requests
 from    time    import  sleep
 
+
 URL =   input("Please, enter the product url: \n >> ")
-    
+
+
 #This makes scraping work with any browser
 headers =   {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36'}
 html  =   requests.get(URL,    headers=headers)
@@ -80,6 +81,7 @@ def loopingChoice():
         looping()
     elif    loopingChoice   ==  "N" or  "No"    or  "n" or  "no":
         return  0
+    
     
 scrap()
 loopingChoice()
